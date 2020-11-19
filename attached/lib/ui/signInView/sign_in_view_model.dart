@@ -1,8 +1,11 @@
+import 'package:attached/main.dart';
 import 'package:attached/services/at_protocol_service.dart';
+import 'package:attached/services/attached_service.dart';
 import 'package:attached/ui/attachView/attach_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:at_demo_data/at_demo_data.dart' as at_demo_data;
+import 'package:url_launcher/url_launcher.dart';
 
 class SignInViewModel extends BaseViewModel{
   String root = 'test.do-sf2.atsign.zone';
@@ -27,6 +30,16 @@ class SignInViewModel extends BaseViewModel{
     notifyListeners();
   }
 
+  void launchToAtStore() async{
+      const url = 'https://atsign.com/get-an-sign/';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+
+  }
+
   // TODO: Write _login method
   /// Use onboard() if device has PKAM public/private keys
   /// in keychain. If that is unsuccessful, use authenticate()
@@ -35,13 +48,16 @@ class SignInViewModel extends BaseViewModel{
     FocusScope.of(context).unfocus();
     if (atSign != null) {
       atProtocolServer.onboard().then((value) {
+        getIt.get<AttachedService>().myAtSign = atSign;
         Navigator.pushReplacementNamed(context, AttachView.id);
       }).catchError((error) async {
         try {
           await atProtocolServer.authenticate(atSign,
               cramSecret: at_demo_data.cramKeyMap[atSign]);
+          getIt.get<AttachedService>().myAtSign = atSign;
           Navigator.pushNamed(context, AttachView.id);
         } catch(e){
+          print("Error: "+e.toString());
           toggleSpinner();
           message = "There was an issue authenticating this @ sign";
           Scaffold.of(context).showSnackBar(SnackBar(

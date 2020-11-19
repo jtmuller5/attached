@@ -31,7 +31,7 @@ class SignInView extends StatelessWidget {
                     child: OutlineButton(
                       child: Text('I Need an @ sign'),
                       onPressed: () {
-                      print("get @ sign");
+                        model.launchToAtStore();
                     },),
                   )
                 ],

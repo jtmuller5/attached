@@ -40,8 +40,12 @@ class AtProtocolServer{
   }
 
   Future<bool> put(AtKey atKey, String value) async {
-    return await this.atClientInstance.put(atKey, value);
+    return await this.atClientInstance.put(atKey, value,);
   }
+/*
+  Future<bool> putAttach(AtKey atKey, String value) async {
+    return await this.atClientInstance.pu(atKey, value);
+  }*/
 
   Future<bool> delete(AtKey atKey) async {
     return await this.atClientInstance.delete(atKey);

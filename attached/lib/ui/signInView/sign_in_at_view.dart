@@ -12,12 +12,13 @@ class SignInAtView extends StatelessWidget {
       viewModelBuilder: () => SignInViewModel(),
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           body: ModalProgressHUD(
             inAsyncCall: model.showSpinner,
             child: Builder(
               builder: (context) => Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -28,12 +29,8 @@ class SignInAtView extends StatelessWidget {
                         model.updateAtSign(newAt);
                       },
                       decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              '@',
-                              style: TextStyle(fontSize: 36, color: Colors.white),
-                            ),
+                          prefixIcon: IconButton(
+                            icon: Icon(Icons.alternate_email,color: Colors.white,),
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
