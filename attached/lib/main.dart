@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:attached/services/attached_service.dart';
 import 'package:attached/ui/homeView/home_view.dart';
 import 'package:attached/ui/signInView/sign_in_at_view.dart';
