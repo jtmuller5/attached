@@ -2,12 +2,13 @@ import 'package:attached/main.dart';
 import 'package:attached/services/at_protocol_service.dart';
 import 'package:attached/services/attached_service.dart';
 import 'package:attached/ui/attachView/attach_view.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:at_demo_data/at_demo_data.dart' as at_demo_data;
 import 'package:url_launcher/url_launcher.dart';
 
-class SignInViewModel extends BaseViewModel{
+class SignInViewModel extends BaseViewModel {
   String root = 'test.do-sf2.atsign.zone';
   int rootPort = 64;
   String namespace = 'server_demo';
@@ -16,28 +17,29 @@ class SignInViewModel extends BaseViewModel{
   bool showSpinner = false;
   String atSign;
   String message;
+  FilePickerResult keyFile;
+
 
   TextEditingController atSignController = TextEditingController();
   AtProtocolServer atProtocolServer = AtProtocolServer();
 
-  void toggleSpinner(){
+  void toggleSpinner() {
     showSpinner = !showSpinner;
     notifyListeners();
   }
 
-  void updateAtSign(String newAt){
+  void updateAtSign(String newAt) {
     atSign = newAt;
     notifyListeners();
   }
 
-  void launchToAtStore() async{
-      const url = 'https://atsign.com/get-an-sign/';
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-
+  void launchToAtStore() async {
+    const url = 'https://atsign.com/get-an-sign/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   // TODO: Write _login method
@@ -52,26 +54,29 @@ class SignInViewModel extends BaseViewModel{
         Navigator.pushReplacementNamed(context, AttachView.id);
       }).catchError((error) async {
         try {
-          await atProtocolServer.authenticate(atSign,
-              cramSecret: at_demo_data.cramKeyMap[atSign]);
+          await atProtocolServer.authenticate(
+            atSign,
+            cramSecret: at_demo_data.cramKeyMap[atSign],
+          );
           getIt.get<AttachedService>().myAtSign = atSign;
           Navigator.pushNamed(context, AttachView.id);
-        } catch(e){
-          print("Error: "+e.toString());
+        } catch (e) {
+          print("Error: " + e.toString());
           toggleSpinner();
           message = "There was an issue authenticating this @ sign";
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(message,
-                textAlign: TextAlign.center),
+            content: Text(message, textAlign: TextAlign.center),
           ));
         }
       });
-    } else{
-     toggleSpinner();
+    } else {
+      toggleSpinner();
       message = "Enter an @ sign to sign in";
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(message,
-        textAlign: TextAlign.center,),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
       ));
     }
     notifyListeners();

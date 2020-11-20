@@ -13,17 +13,22 @@ dependencies:
 
   at_demo_data: ^0.0.2+1
   at_client_mobile: ^1.0.0+1
+  device_preview: ^0.5.5
   flip_card: ^0.4.4
+  flutter_archive: ^1.0.3
+  file_picker: ^2.0.13
   get_it: ^5.0.1
   google_fonts: ^1.1.1
   modal_progress_hud: any
   path_provider: ^1.6.24
+  pedantic: ^1.9.2
   stacked: ^1.7.6
   url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic: ^1.9.2
 
 flutter:
   uses-material-design: true

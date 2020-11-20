@@ -56,4 +56,8 @@ class AtProtocolServer{
         .atClientInstance
         .getKeys(regex: 'server_demo', sharedBy: sharedBy);
   }
+
+  Future<bool> saveKeys(String publicKey, String privateKey) {
+    return this.atClientInstance.persistPublicKey(publicKey);
+  }
 }
