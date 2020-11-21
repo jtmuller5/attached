@@ -62,22 +62,32 @@ class HomeView extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            SizedBox(
-              width: 100,
-              child: Text('From: ${model.sender}',
+            Text('From: ${model.sender}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),),
+            Text(model.senderAt,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.w300
               ),),
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.swap_vert_circle,
+            SizedBox(
+              width: 100,
+              child: IconButton(
+                icon: Icon(
+                  Icons.swap_vert_circle,
+                ),
+                onPressed: () {
+                  model.toggleSender();
+                },
               ),
-              onPressed: () {
-                model.toggleSender();
-              },
             ),
+            Text(model.receiverAt,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w300
+              ),),
             Text('To: ${model.receiver}',
               style: TextStyle(
                   fontWeight: FontWeight.bold

@@ -13,10 +13,16 @@ class HomeViewModel extends BaseViewModel {
   String sender = "You";
   String receiver = "Them";
 
+  String senderAt;
+  String receiverAt;
+
   LoveNote note =
       LoveNote("This is amazing", Colors.blueAccent, "@bob🛠", "11/18/2020");
 
   void initializeHome() async {
+    senderAt = getIt.get<AttachedService>().myAtSign;
+    receiverAt = getIt.get<AttachedService>().theirAtSign;
+
     // Get an instance of AtClient for the current user
     var atClient =
         await AtClientImpl.getClient(getIt.get<AttachedService>().myAtSign);
@@ -33,7 +39,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void getKeyValues(List<String> keys, AtClient atClient){
-    notes = []; // Reset love notes
+
     keys.forEach((element) async {
       AtKey key = AtKey.fromString(element);
       print(key);
@@ -50,31 +56,54 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> toggleSender() async {
+    notes = []; // Reset love notes
     if(sender == "You"){
       sender = "Them";
       receiver = "You";
 
-      var atClient =
-      await AtClientImpl.getClient(getIt.get<AttachedService>().myAtSign);
-      // Scans keys shared by the person you're att@ched to
-      sharedKeys = await atClient.getKeys(
-          sharedBy: getIt.get<AttachedService>().theirAtSign);
+      receiverAt = getIt.get<AttachedService>().myAtSign;
+      senderAt = getIt.get<AttachedService>().theirAtSign;
 
-      getKeyValues(sharedKeys, atClient);
+      try {
+        var atClient =
+        await AtClientImpl.getClient(getIt
+            .get<AttachedService>()
+            .myAtSign);
+        // Scans keys shared by the person you're att@ched to
+        sharedKeys = await atClient.getKeys(
+            sharedBy: getIt
+                .get<AttachedService>()
+                .theirAtSign);
+
+        getKeyValues(sharedKeys, atClient);
+      } catch (e){
+        print(e.toString());
+      }
 
     } else {
       sender = "You";
       receiver = "Them";
 
-      var atClient =
-          await AtClientImpl.getClient(getIt.get<AttachedService>().myAtSign);
-      // Scans keys shared by the person you're att@ched to
-      sharedKeys = await atClient.getKeys(
-          sharedWith: getIt.get<AttachedService>().theirAtSign);
+      senderAt = getIt.get<AttachedService>().myAtSign;
+      receiverAt = getIt.get<AttachedService>().theirAtSign;
 
-      getKeyValues(sharedKeys, atClient);
+      try {
+        var atClient =
+        await AtClientImpl.getClient(getIt
+            .get<AttachedService>()
+            .myAtSign);
+        // Scans keys shared by the person you're att@ched to
+        sharedKeys = await atClient.getKeys(
+            sharedWith: getIt
+                .get<AttachedService>()
+                .theirAtSign);
 
-      print("Shared Keys:" + sharedKeys.toString());
+        getKeyValues(sharedKeys, atClient);
+
+        print("Shared Keys:" + sharedKeys.toString());
+      } catch (e){
+        print(e.toString());
+      }
     }
     notifyListeners();
   }
