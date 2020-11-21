@@ -35,11 +35,13 @@ class NewNoteView extends StatelessWidget {
                       hintStyle: TextStyle(color: Colors.red.shade300)),
                 ),
               ),
-              RaisedButton(
-                  child: Text('Send'),
-                  onPressed: (){
-                model.submitNewMessage(context);
-              })
+              Builder(
+                builder:(context) =>  RaisedButton(
+                    child: Text('Send'),
+                    onPressed: (){
+                  model.submitNewMessage(context);
+                }),
+              )
             ],
           ),
         ),

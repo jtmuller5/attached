@@ -20,27 +20,39 @@ class NewNoteViewModel extends BaseViewModel {
     var rng = Random();
     var noteID = rng.nextInt(999999); // Random note ID
 
-    // Get an instance of AtClient for the current user
-    var atClient =
-        await AtClientImpl.getClient(getIt.get<AttachedService>().myAtSign);
+    try {
+      // Get an instance of AtClient for the current user
+      var atClient =
+      await AtClientImpl.getClient(getIt
+          .get<AttachedService>()
+          .myAtSign);
 
-    print("Yours: " + getIt.get<AttachedService>().theirAtSign);
+      print("Yours: " + getIt
+          .get<AttachedService>()
+          .theirAtSign);
 
-    // Submit new note only visible to your att@ched person
-    var newKey = AtKey();
-    newKey.sharedWith = getIt.get<AttachedService>().theirAtSign;
-    newKey.key = 'note_${noteID}';
+      // Submit new note only visible to your att@ched person
+      var newKey = AtKey();
+      newKey.sharedWith = getIt
+          .get<AttachedService>()
+          .theirAtSign;
+      newKey.key = 'note_${noteID}';
 
-    print('Key:' + newKey.toString());
+      print('Key:' + newKey.toString());
 
-    bool success = await atClient.put(newKey, noteMessage);
+      bool success = await atClient.put(newKey, noteMessage);
 
-    if (success) {
-      print("Success");
-      Navigator.pop(context);
-    } else {
-      print("Failure");
-      Navigator.pop(context);
+      if (success) {
+        print("Success");
+        Navigator.pop(context);
+      } else {
+        print("Failure");
+        Navigator.pop(context);
+      }
+    } catch(e){
+      print("Send Error: " +e.toString());
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Something went wrong"),));
+      //Navigator.pop(context);
     }
   }
 }

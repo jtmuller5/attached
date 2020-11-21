@@ -17,23 +17,33 @@ class HomeViewModel extends BaseViewModel {
   String receiverAt;
 
   LoveNote note =
-      LoveNote("This is amazing", Colors.blueAccent, "@bob🛠", "11/18/2020");
+      LoveNote("This is amazing", Colors.redAccent, "@bob🛠", "11/18/2020");
 
   void initializeHome() async {
     senderAt = getIt.get<AttachedService>().myAtSign;
     receiverAt = getIt.get<AttachedService>().theirAtSign;
 
-    // Get an instance of AtClient for the current user
-    var atClient =
-        await AtClientImpl.getClient(getIt.get<AttachedService>().myAtSign);
-    // Scans keys shared by the person you're att@ched to
-    sharedKeys = await atClient.getKeys(
-        sharedWith: getIt.get<AttachedService>().theirAtSign);
+    try {
+      // Get an instance of AtClient for the current user
+      var atClient =
+      await AtClientImpl.getClient(getIt
+          .get<AttachedService>()
+          .myAtSign);
+      // Scans keys shared by the person you're att@ched to
+      sharedKeys = await atClient.getKeys(
+          sharedWith: getIt
+              .get<AttachedService>()
+              .theirAtSign);
 
-    print("Theirs:" + getIt.get<AttachedService>().theirAtSign);
-    print("Shared Keys:" + sharedKeys.toString());
+      print("Theirs:" + getIt
+          .get<AttachedService>()
+          .theirAtSign);
+      print("Shared Keys:" + sharedKeys.toString());
 
-    getKeyValues(sharedKeys, atClient);
+      getKeyValues(sharedKeys, atClient);
+    } catch (e){
+      print(e.toString())
+;    }
 
     notifyListeners();
   }
