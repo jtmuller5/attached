@@ -95,40 +95,44 @@ class HomeView extends StatelessWidget {
     return Positioned(
       bottom: 16,
       left: 16,
-      child: Container(
-        child: Column(
-          children: [
-            Text(
-              'From: ${model.sender}',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              model.senderAt,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.w300),
-            ),
-            SizedBox(
-              width: 100,
-              child: IconButton(
-                icon: Icon(
-                  Icons.swap_vert_circle,
-                ),
-                onPressed: () {
-                  model.toggleSender();
-                },
+      child: AnimatedOpacity(
+        opacity: model.showToggle?1:0,
+        duration: Duration(milliseconds: 500),
+        child: Container(
+          child: Column(
+            children: [
+              Text(
+                'From: ${model.sender}',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ),
-            Text(
-              model.receiverAt,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.w300),
-            ),
-            Text(
-              'To: ${model.receiver}',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
+              Text(
+                model.senderAt,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
+              SizedBox(
+                width: 100,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.swap_vert_circle,
+                  ),
+                  onPressed: () {
+                    model.toggleSender();
+                  },
+                ),
+              ),
+              Text(
+                model.receiverAt,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
+              Text(
+                'To: ${model.receiver}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -196,7 +200,7 @@ class HomeView extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(16),
                 padding: EdgeInsets.all(16),
-                child: Text("There's nothing here :("),
+                child: Text('There\'s nothing here :('),
               ),
             ),
           ),
@@ -218,7 +222,8 @@ class HomeView extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(
-                    side: BorderSide(color: Colors.red),
+                    side: BorderSide(color: Colors.black,
+                    width: .5),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: Container(
                   margin: EdgeInsets.all(8),
@@ -247,7 +252,8 @@ class HomeView extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(
-                    side: BorderSide(color: Colors.red),
+                    side: BorderSide(color: Colors.black,
+                    width: .5),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: Container(
                   margin: EdgeInsets.all(8),

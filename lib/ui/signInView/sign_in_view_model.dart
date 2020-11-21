@@ -50,17 +50,17 @@ class SignInViewModel extends BaseViewModel {
     FocusScope.of(context).unfocus();
     if (atSign != null) {
       await atProtocolServer.onboard().then((value) {
-        if(atSign.contains("@")) {
+        if(atSign.contains('@')) {
           getIt
               .get<AttachedService>()
               .myAtSign = atSign;
           getIt
               .get<AttachedService>()
-              .mySign = atSign.replaceAll("@", "");
+              .mySign = atSign.replaceAll('@', '');
         } else{
           getIt
               .get<AttachedService>()
-              .myAtSign = "@"+atSign;
+              .myAtSign = '@'+atSign;
           getIt
               .get<AttachedService>()
               .mySign = atSign;
@@ -77,9 +77,9 @@ class SignInViewModel extends BaseViewModel {
           );
           Navigator.pushNamed(context, AttachView.id);
         } catch (e) {
-          print("Error: " + e.toString());
+          print('Error: ' + e.toString());
           toggleSpinner();
-          message = "There was an issue authenticating this @ sign";
+          message = 'There was an issue authenticating this @ sign';
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(message, textAlign: TextAlign.center),
           ));
@@ -87,7 +87,7 @@ class SignInViewModel extends BaseViewModel {
       });
     } else {
       toggleSpinner();
-      message = "Enter an @ sign to sign in";
+      message = 'Enter an @ sign to sign in';
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(
           message,

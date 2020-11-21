@@ -10,7 +10,7 @@ class AtProtocolServer{
     atClientServiceInstance = AtClientService();
     final appDocumentDirectory =
     await path_provider.getApplicationDocumentsDirectory();
-    String path = appDocumentDirectory.path;
+    var path = appDocumentDirectory.path;
     var atClientPreference = AtClientPreference()
       ..isLocalStoreRequired = true
       ..commitLogPath = path
@@ -40,7 +40,7 @@ class AtProtocolServer{
   }
 
   Future<bool> put(AtKey atKey, String value) async {
-    return await this.atClientInstance.put(atKey, value,);
+    return await atClientInstance.put(atKey, value,);
   }
 /*
   Future<bool> putAttach(AtKey atKey, String value) async {
@@ -48,16 +48,15 @@ class AtProtocolServer{
   }*/
 
   Future<bool> delete(AtKey atKey) async {
-    return await this.atClientInstance.delete(atKey);
+    return await atClientInstance.delete(atKey);
   }
 
   Future<List<String>> getKeys({String sharedBy}) async {
-    return await this
-        .atClientInstance
+    return await atClientInstance
         .getKeys(regex: 'server_demo', sharedBy: sharedBy);
   }
 
   Future<bool> saveKeys(String publicKey, String privateKey) {
-    return this.atClientInstance.persistPublicKey(publicKey);
+    return atClientInstance.persistPublicKey(publicKey);
   }
 }

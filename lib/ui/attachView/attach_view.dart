@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class AttachView extends StatelessWidget {
-  static const String id = "attach_view";
+  static const String id = 'attach_view';
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,7 @@ class AttachView extends StatelessWidget {
                       model.updateAttachedString(value);
                     },
                     decoration: InputDecoration(
-                        prefixIcon: IconButton(
-                          icon: Icon(Icons.alternate_email,color: Colors.white,),
-                        ),
+                        prefixIcon: Icon(Icons.alternate_email,color: Colors.white,),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),
@@ -58,7 +56,7 @@ class AttachView extends StatelessWidget {
                 onPressed: () {
                   model.updateAttached();
                   Navigator.pushNamedAndRemoveUntil(context, HomeView.id, (route) => route.isFirst);
-                  print("attach");
+                  print('attach');
                 },
               ),
               Spacer(

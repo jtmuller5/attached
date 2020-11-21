@@ -5,7 +5,7 @@ import 'package:stacked/stacked.dart';
 
 
 class NewNoteView extends StatelessWidget {
-  static const String id = "new_note_view";
+  static const String id = 'new_note_view';
 
   @override
   Widget build(BuildContext context) {

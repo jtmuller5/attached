@@ -10,14 +10,16 @@ class HomeViewModel extends BaseViewModel {
   List<LoveNote> notes = [];
   List<String> sharedKeys = [];
 
-  String sender = "You";
-  String receiver = "Them";
+  String sender = 'You';
+  String receiver = 'Them';
 
   String senderAt;
   String receiverAt;
 
+  bool showToggle = true;
+
   LoveNote note =
-      LoveNote("This is amazing", Colors.redAccent, "@bob🛠", "11/18/2020");
+      LoveNote('This is amazing', Colors.redAccent, '@bob🛠', '11/18/2020');
 
   void initializeHome() async {
     senderAt = getIt.get<AttachedService>().myAtSign;
@@ -35,16 +37,21 @@ class HomeViewModel extends BaseViewModel {
               .get<AttachedService>()
               .theirAtSign);
 
-      print("Theirs:" + getIt
+      print('Theirs:' + getIt
           .get<AttachedService>()
           .theirAtSign);
-      print("Shared Keys:" + sharedKeys.toString());
+      print('Shared Keys:' + sharedKeys.toString());
 
       getKeyValues(sharedKeys, atClient);
     } catch (e){
       print(e.toString())
 ;    }
 
+    notifyListeners();
+  }
+
+  void toggleToggle(){
+    showToggle = !showToggle;
     notifyListeners();
   }
 
@@ -67,9 +74,10 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> toggleSender() async {
     notes = []; // Reset love notes
-    if(sender == "You"){
-      sender = "Them";
-      receiver = "You";
+    toggleToggle();
+    if(sender == 'You'){
+      sender = 'Them';
+      receiver = 'You';
 
       receiverAt = getIt.get<AttachedService>().myAtSign;
       senderAt = getIt.get<AttachedService>().theirAtSign;
@@ -91,8 +99,8 @@ class HomeViewModel extends BaseViewModel {
       }
 
     } else {
-      sender = "You";
-      receiver = "Them";
+      sender = 'You';
+      receiver = 'Them';
 
       senderAt = getIt.get<AttachedService>().myAtSign;
       receiverAt = getIt.get<AttachedService>().theirAtSign;
@@ -110,11 +118,12 @@ class HomeViewModel extends BaseViewModel {
 
         getKeyValues(sharedKeys, atClient);
 
-        print("Shared Keys:" + sharedKeys.toString());
+        print('Shared Keys:' + sharedKeys.toString());
       } catch (e){
         print(e.toString());
       }
     }
+    toggleToggle();
     notifyListeners();
   }
 }

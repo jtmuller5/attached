@@ -7,7 +7,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInView extends StatelessWidget {
-  static const String id = "sign_in_view";
+  static const String id = 'sign_in_view';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SignInView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Get Att@ched",
+                    'Get Att@ched',
                     style: GoogleFonts.caveat(
                       textStyle: TextStyle(
                         fontSize: 36,
