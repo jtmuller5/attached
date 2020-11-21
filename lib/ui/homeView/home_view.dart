@@ -16,41 +16,77 @@ class HomeView extends StatelessWidget {
       onModelReady: (model) {
         model.initializeHome();
       },
-      builder: (context, model, child) => Scaffold(
-        body: Stack(
-          children: [
-            Background(model.note),
-            if(model.notes.length > 0) PageView.builder(
-
-              itemCount: model.notes.length,
-              itemBuilder: (context, index) {
-                return LoveNoteDisplay(model.notes[index]);
-              },
-            ),
-            if(model.notes.length == 0) NoNotes(),
-            ToFromToggle(model)
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, NewNoteView.id);
-          },
-          child: Icon(
-            Icons.outgoing_mail,
-            color: Colors.white,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        /*bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      builder: (context, model, child) => SafeArea(
+        child: Scaffold(
+          body: Stack(
             children: [
-              IconButton(icon: Icon(Icons.person), onPressed: null),
-              IconButton(icon: Icon(Icons.favorite_border), onPressed: null)
+              Background(model.note),
+              if (model.notes.length > 0)
+                PageView.builder(
+                  itemCount: model.notes.length,
+                  itemBuilder: (context, index) {
+                    return LoveNoteDisplay(model.notes[index], model);
+                  },
+                ),
+              if (model.notes.length == 0) NoNotes(),
+              ToFromToggle(model),
+              InfoIcon(context),
             ],
           ),
-        ),*/
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, NewNoteView.id);
+            },
+            child: Icon(
+              Icons.outgoing_mail,
+              color: Colors.white,
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          /*bottomNavigationBar: BottomAppBar(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(icon: Icon(Icons.person), onPressed: null),
+                IconButton(icon: Icon(Icons.favorite_border), onPressed: null)
+              ],
+            ),
+          ),*/
+        ),
+      ),
+    );
+  }
+
+  Widget InfoIcon(BuildContext context) {
+    return Positioned(
+      top: 16,
+      left: 16,
+      child: IconButton(
+        icon: Icon(
+          Icons.info_outline,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          showDialog(
+              context: context,
+              child: AlertDialog(
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                        'The @ Protocol ensures that only you and the att@ched person can see these notes. \n\nNot big brother. \n\nNot the FBI. \n\nJust the 2 of you'),
+                  ],
+                ),
+                title: Text('True Privacy'),
+                actions: [
+                  TextButton(
+                    child: Text('Sweet'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ));
+        },
       ),
     );
   }
@@ -62,16 +98,16 @@ class HomeView extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            Text('From: ${model.sender}',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold
-            ),),
-            Text(model.senderAt,
+            Text(
+              'From: ${model.sender}',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w300
-              ),),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              model.senderAt,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w300),
+            ),
             SizedBox(
               width: 100,
               child: IconButton(
@@ -83,15 +119,15 @@ class HomeView extends StatelessWidget {
                 },
               ),
             ),
-            Text(model.receiverAt,
+            Text(
+              model.receiverAt,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w300
-              ),),
-            Text('To: ${model.receiver}',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
+              style: TextStyle(fontWeight: FontWeight.w300),
+            ),
+            Text(
+              'To: ${model.receiver}',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
@@ -112,7 +148,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget LoveNoteDisplay(LoveNote note) {
+  Widget LoveNoteDisplay(LoveNote note, HomeViewModel model) {
     return Center(
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,7 +167,7 @@ class HomeView extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 )),
           ),
-          Flexible(flex: 5, child: LoveNoteCard(note)),
+          Flexible(flex: 5, child: LoveNoteCard(note, model)),
         ],
       ),
     );
@@ -162,7 +198,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget LoveNoteCard(LoveNote note) {
+  Widget LoveNoteCard(LoveNote note, HomeViewModel model) {
     return FlipCard(
         direction: FlipDirection.HORIZONTAL,
         front: Builder(
@@ -214,7 +250,7 @@ class HomeView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            note.sender,
+                            model.senderAt,
                             style: TextStyle(color: Colors.black),
                           )
                         ],
