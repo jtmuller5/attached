@@ -46,4 +46,4 @@ This app is currently set up to run on the @ demo servers.
 @sitaram🛠
 
 ## Screenshots
-![Get Attached](https://github.com/jtmuller5/attached/blob/main/image.jpg?raw=true)
+![Get Attached](https://github.com/jtmuller5/attached/blob/main/assets/screenshots/attached_sign_in.png)
