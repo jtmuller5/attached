@@ -46,4 +46,8 @@ This app is currently set up to run on the @ demo servers.
 @sitaram🛠
 
 ## Screenshots
-![Get Attached](https://github.com/jtmuller5/attached/blob/main/assets/screenshots/attached_sign_in.png)
+
+<img src="https://github.com/jtmuller5/attached/blob/main/assets/screenshots/attached_sign_in.png" width="300"/>
+<img src="https://github.com/jtmuller5/attached/blob/main/assets/screenshots/attached_welcome.png" width="300"/>
+<img src="https://github.com/jtmuller5/attached/blob/main/assets/screenshots/love_note.png" width="300"/>
+<img src="https://github.com/jtmuller5/attached/blob/main/assets/screenshots/send_message.png" width="300"/>
