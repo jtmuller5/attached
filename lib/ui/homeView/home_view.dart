@@ -159,13 +159,21 @@ class HomeView extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: Text(note.date,
-                style: GoogleFonts.caveat(
-                  textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold),
-                )),
+            child: Column(
+              children: [
+                Text(note.date,
+                    style: GoogleFonts.caveat(
+                      textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold),
+                    )),
+                Text('Swipe left and right for more',
+                style: TextStyle(
+                  fontWeight: FontWeight.w300
+                ),),
+              ],
+            ),
           ),
           Flexible(flex: 5, child: LoveNoteCard(note, model)),
         ],
@@ -206,11 +214,11 @@ class HomeView extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 3 * 2,
             child: Card(
               shape: BeveledRectangleBorder(
-                  side: BorderSide(color: Colors.blueAccent),
+                  side: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(
-                    side: BorderSide(color: Colors.blueAccent),
+                    side: BorderSide(color: Colors.red),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: Container(
                   margin: EdgeInsets.all(8),
@@ -235,11 +243,11 @@ class HomeView extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 3 * 2,
             child: Card(
               shape: BeveledRectangleBorder(
-                  side: BorderSide(color: Colors.blueAccent),
+                  side: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(
-                    side: BorderSide(color: Colors.blueAccent),
+                    side: BorderSide(color: Colors.red),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: Container(
                   margin: EdgeInsets.all(8),
