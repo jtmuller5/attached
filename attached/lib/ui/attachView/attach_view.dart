@@ -34,6 +34,7 @@ class AttachView extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     style: TextStyle(color: Colors.white),
+                    controller: model.attacheeController,
                     onChanged: (value){
                       model.updateAttachedString(value);
                     },
@@ -47,7 +48,7 @@ class AttachView extends StatelessWidget {
                         filled: true,
                         fillColor: Colors.red.shade300,
                         focusColor: Colors.red,
-                        hintText: "Someone special....",
+                        hintText: 'Someone special....',
                         hintStyle: TextStyle(color: Colors.white38)),
                   ),
                 ),

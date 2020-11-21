@@ -14,7 +14,21 @@ String attachedString;
   }
 
   void updateAttached(){
-    getIt.get<AttachedService>().yourAtSign = attachedString;
+    if(attachedString.contains("@")) {
+      getIt
+          .get<AttachedService>()
+          .theirAtSign = attachedString;
+      getIt
+          .get<AttachedService>()
+          .theirSign = attachedString.replaceAll("@", "");
+    } else{
+      getIt
+          .get<AttachedService>()
+          .theirAtSign = "@"+attachedString;
+      getIt
+          .get<AttachedService>()
+          .theirSign = attachedString;
+    }
     notifyListeners();
   }
 }

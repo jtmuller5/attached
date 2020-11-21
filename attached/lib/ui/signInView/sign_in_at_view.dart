@@ -23,7 +23,7 @@ class SignInAtView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ExistingKeys(model),
+                    AlreadySignedIn(model, context),
                     Flexible(
                       child: Container(
                           width: 100,
@@ -31,7 +31,8 @@ class SignInAtView extends StatelessWidget {
                             thickness: 2,
                           )),
                     ),
-                    AlreadySignedIn(model, context)
+                    ExistingKeys(model),
+
                   ],
                 ),
               ),
@@ -51,7 +52,13 @@ class SignInAtView extends StatelessWidget {
             'Use Existing Keys',
             style: TextStyle(fontSize: 36),
           ),
-          Text('Please select the zip file containing '),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text('Please select the zip file containing your keys and QR code',
+                overflow: TextOverflow.ellipsis,)),
+          ),
           OutlineButton(
               child: SizedBox(
                 width: 150,
@@ -60,11 +67,12 @@ class SignInAtView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.file_upload),
-                    Text('Locate Keys'),
+                    Text('Coming Soon'),
+                    //Text('Locate Keys'),
                   ],
                 ),
               ),
-              onPressed: () async {
+              onPressed: true?null:() async {
                 model.keyFile = await FilePicker.platform.pickFiles();
               }),
         ],

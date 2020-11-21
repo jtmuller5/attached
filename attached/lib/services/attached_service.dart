@@ -1,4 +1,7 @@
 class AttachedService{
   String myAtSign;
-  String yourAtSign;
+  String theirAtSign;
+
+  String mySign;
+  String theirSign; // No @ symbol
 }

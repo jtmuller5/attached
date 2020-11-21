@@ -49,16 +49,32 @@ class SignInViewModel extends BaseViewModel {
   login(BuildContext context) async {
     FocusScope.of(context).unfocus();
     if (atSign != null) {
-      atProtocolServer.onboard().then((value) {
-        getIt.get<AttachedService>().myAtSign = atSign;
+      await atProtocolServer.onboard().then((value) {
+        if(atSign.contains("@")) {
+          getIt
+              .get<AttachedService>()
+              .myAtSign = atSign;
+          getIt
+              .get<AttachedService>()
+              .mySign = atSign.replaceAll("@", "");
+        } else{
+          getIt
+              .get<AttachedService>()
+              .myAtSign = "@"+atSign;
+          getIt
+              .get<AttachedService>()
+              .mySign = atSign;
+        }
+
         Navigator.pushReplacementNamed(context, AttachView.id);
       }).catchError((error) async {
         try {
           await atProtocolServer.authenticate(
-            atSign,
+            getIt
+                .get<AttachedService>()
+                .myAtSign,
             cramSecret: at_demo_data.cramKeyMap[atSign],
           );
-          getIt.get<AttachedService>().myAtSign = atSign;
           Navigator.pushNamed(context, AttachView.id);
         } catch (e) {
           print("Error: " + e.toString());
