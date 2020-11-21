@@ -6,7 +6,7 @@ Secured via the [@ Protocol](https://atsign.com/)
 
 ## Testing
 This app is currently set up to run on the @ demo servers. 
-- Follow the instructions [here] (https://atsign.dev/gettingstarted.html) to set up your testing environment.
+- Follow the instructions [here](https://atsign.dev/gettingstarted.html) to set up your testing environment.
 - Once setup, you can log into the app using any of these @signs:
 
 @alice🛠
