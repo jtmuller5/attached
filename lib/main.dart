@@ -2,7 +2,6 @@ import 'package:attached/services/attached_service.dart';
 import 'package:attached/ui/homeView/home_view.dart';
 import 'package:attached/ui/newNoteView/new_note_view.dart';
 import 'package:attached/ui/signInView/sign_in_at_view.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
