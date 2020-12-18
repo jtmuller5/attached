@@ -1,5 +1,5 @@
 import 'package:attached/models/love_note.dart';
-import 'package:attached/ui/homeView/bodyWidgets/no_notes.dart';
+import 'package:attached/services/services.dart';
 import 'package:attached/ui/homeView/home_view_model.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ Widget LoveNoteCard(LoveNote note, HomeViewModel model) {
             width: MediaQuery.of(context).size.width / 3 * 2,
             child: Card(
               shape: BeveledRectangleBorder(
-                  side: BorderSide(color: Colors.red),
+                  side: BorderSide(color: themeService.darkColor),
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(
@@ -43,7 +43,7 @@ Widget LoveNoteCard(LoveNote note, HomeViewModel model) {
             width: MediaQuery.of(context).size.width / 3 * 2,
             child: Card(
               shape: BeveledRectangleBorder(
-                  side: BorderSide(color: Colors.red),
+                  side: BorderSide(color: themeService.darkColor),
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               child: Card(
                 shape: BeveledRectangleBorder(

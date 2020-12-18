@@ -1,4 +1,5 @@
 
+import 'package:attached/ui/reusables/attached_logo.dart';
 import 'package:flutter/material.dart';
 
 Widget NoNotes() {
@@ -8,15 +9,24 @@ Widget NoNotes() {
       mainAxisSize: MainAxisSize.max,
       children: [
         Spacer(
-          flex: 2,
+          flex: 1,
         ),
         Flexible(
-          flex: 2,
+          flex: 3,
           child: Card(
             child: Container(
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.all(16),
-              child: Text('There\'s nothing here :('),
+              child: Column(
+                children: [
+                  Flexible(
+                    child: Container(
+                        height: 200,
+                        child: AttachedLogo()),
+                  ),
+                  Text('There\'s nothing here...'),
+                ],
+              ),
             ),
           ),
         ),

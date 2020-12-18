@@ -8,8 +8,9 @@ class FlexibleHomeHeader extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      expandedHeight: 200,
-      elevation: 0,
+      expandedHeight: 150,
+      collapsedHeight: 100,
+      elevation: 4,
       pinned: false,
       floating: true,
       flexibleSpace: HomeHeader(),

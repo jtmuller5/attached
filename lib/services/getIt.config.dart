@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 
 import 'at/at_protocol_service.dart';
 import 'at/attached_service.dart';
+import 'app/system_service.dart';
 import 'app/theme_service.dart';
 import 'user/user_service.dart';
 
@@ -21,6 +22,7 @@ GetIt $initGetIt(
   EnvironmentFilter environmentFilter,
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
+  gh.factory<SystemService>(() => SystemService());
   gh.factory<ThemeService>(() => ThemeService());
 
   // Eager singletons must be registered in the right order

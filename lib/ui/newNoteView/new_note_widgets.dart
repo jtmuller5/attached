@@ -13,6 +13,7 @@ class NoteDraft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.symmetric(vertical: 24),
       color: Colors.white,
       child: Column(
         children: [

@@ -6,6 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
 class LoveNoteDisplay extends ViewModelWidget<HomeViewModel>{
+
+  final LoveNote pageCard;
+
+  LoveNoteDisplay(this.pageCard); // Need so the same card isn't shown everywhere
+
   @override
   Widget build(BuildContext context, HomeViewModel model) {
     if(!model.loadingMessages) {
@@ -17,15 +22,17 @@ class LoveNoteDisplay extends ViewModelWidget<HomeViewModel>{
             Spacer(
               flex: 2,
             ),
-            Expanded(
+            Flexible(flex: 5, child: LoveNoteCard(pageCard, model)),
+            Flexible(
               flex: 2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(model.selectedNote.date ?? '12/15/2020',
+                  Text(pageCard.date ?? '12/15/2020',
                       style: GoogleFonts.caveat(
                         textStyle: TextStyle(
                             color: Colors.black,
-                            fontSize: 36,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold),
                       )),
                   Text('Swipe left and right for more',
@@ -35,7 +42,6 @@ class LoveNoteDisplay extends ViewModelWidget<HomeViewModel>{
                 ],
               ),
             ),
-            Flexible(flex: 5, child: LoveNoteCard(model.selectedNote, model)),
           ],
         ),
       );

@@ -68,14 +68,18 @@ class ExistingKeys extends ViewModelWidget<SignInViewModel>{
         children: [
           Text(
             'Use Existing Keys',
-            style: TextStyle(fontSize: 28),
+            style: themeService.attachedStyle,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text('Please select the zip file containing your keys and QR code',
-                  overflow: TextOverflow.ellipsis,)),
+            child: Container(
+              width: systemService.screenWidth(context)*(2/3),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text('Please select the zip file containing your keys and QR code',
+                    overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black),)),
+            ),
           ),
           OutlineButton(
               child: SizedBox(

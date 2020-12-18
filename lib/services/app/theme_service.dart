@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class ThemeService {
   Color get darkColor {
-    return Colors.red.shade800;
+    return Colors.red.shade800; // c62828
   }
 
   ThemeData get appTheme {
@@ -19,6 +20,14 @@ class ThemeService {
         buttonColor: darkColor,
       ),
     );
+  }
+
+  TextStyle get attachedStyle{
+    return GoogleFonts.caveat(
+        textStyle: TextStyle(
+          fontSize: 36,
+          //color: Colors.red
+        ));
   }
 
   InputDecoration get appInput {

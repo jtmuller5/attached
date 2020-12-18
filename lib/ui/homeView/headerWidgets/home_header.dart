@@ -1,3 +1,4 @@
+import 'package:attached/ui/homeView/headerWidgets/memory_row.dart';
 import 'package:attached/ui/homeView/headerWidgets/top_menu.dart';
 import 'package:attached/ui/homeView/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +11,15 @@ class HomeHeader extends ViewModelWidget<HomeViewModel>{
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            width: 2
-          )
+          /*bottom: BorderSide(
+           // width: 2
+          )*/
         )
       ),
       child: Column(
         children: [
-          TopMenu()
+          TopMenu(),
+          Flexible(child: MemoryRow())
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:attached/services/services.dart';
+import 'package:attached/ui/reusables/attached_logo.dart';
 import 'package:attached/ui/signInView/sign_in_view_model.dart';
 import 'package:attached/ui/signInView/sign_in_widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class SignInAtView extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomPadding: false,
           body: ModalProgressHUD(
+            color: themeService.darkColor,
             inAsyncCall: model.showSpinner,
             child: Builder(
               builder: (context) => Center(
@@ -23,6 +26,7 @@ class SignInAtView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    AttachedLogo(),
                     AlreadySignedIn(context),
                     Flexible(
                       child: Container(

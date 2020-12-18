@@ -1,3 +1,4 @@
+import 'package:attached/services/app/system_service.dart';
 import 'package:attached/services/app/theme_service.dart';
 import 'package:attached/services/at/at_protocol_service.dart';
 import 'package:attached/services/at/attached_service.dart';
@@ -37,4 +38,8 @@ AttachedService get attachedService {
 
 ThemeService get themeService{
   return getIt.get<ThemeService>();
+}
+
+SystemService get systemService{
+  return getIt.get<SystemService>();
 }
