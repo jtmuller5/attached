@@ -1,5 +1,5 @@
 import 'package:attached/ui/homeView/headerWidgets/memory_row.dart';
-import 'package:attached/ui/homeView/headerWidgets/top_menu.dart';
+import 'package:attached/ui/homeView/headerWidgets/header_top_menu.dart';
 import 'package:attached/ui/homeView/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -18,7 +18,7 @@ class HomeHeader extends ViewModelWidget<HomeViewModel>{
       ),
       child: Column(
         children: [
-          TopMenu(),
+          HeaderTopMenu(),
           Flexible(child: MemoryRow())
         ],
       ),

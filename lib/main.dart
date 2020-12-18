@@ -3,6 +3,7 @@ import 'package:attached/services/services.dart';
 import 'package:attached/services/user/user_service.dart';
 import 'package:attached/ui/homeView/home_view.dart';
 import 'package:attached/ui/newNoteView/new_note_view.dart';
+import 'package:attached/ui/profileView/profile_view.dart';
 import 'package:attached/ui/signInView/sign_in_at_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -73,7 +74,8 @@ class MyApp extends StatelessWidget {
         SignInAtView.id: (context) => SignInAtView(),
         AttachView.id: (context) => AttachView(),
         HomeView.id: (context) => HomeView(),
-        NewNoteView.id: (context) => NewNoteView()
+        NewNoteView.id: (context) => NewNoteView(),
+        ProfileView.id: (context) => ProfileView(),
       },
     );
   }

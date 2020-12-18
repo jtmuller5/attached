@@ -33,9 +33,10 @@ class NewNoteView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8)
                       ),
                       onPressed: (){
-                        model.submitNewMessage(context);
+                        Navigator.pop(context,model.loveNote);
+                        //model.submitNewMessage(context);
                       }),
-                )
+                ),
               ],
             ),
           ),

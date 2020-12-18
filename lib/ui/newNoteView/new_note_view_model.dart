@@ -24,42 +24,4 @@ class NewNoteViewModel extends BaseViewModel {
     loveNote.message = newMessage;
     notifyListeners();
   }
-
-  Future<void> submitNewMessage(BuildContext context) async {
-    var rng = Random();
-    var noteID = rng.nextInt(999999); // Random note ID
-
-    try {
-      // Get an instance of AtClient for the current user
-      var atClient =
-      await AtClientImpl.getClient( attachedService
-          .myAtSign);
-
-      print('Yours: ' +  attachedService
-          .theirAtSign);
-
-      // Submit new note only visible to your att@ched person
-      var newKey = AtKey();
-      newKey.sharedWith =  attachedService
-          .theirAtSign;
-      newKey.key = 'note_${noteID}';
-
-      print('Key:' + newKey.toString());
-
-      var success = await atClient.put(newKey, loveNote.message);
-
-      if (success) {
-        print('Success');
-        homeModel.addMessage(loveNote);
-        Navigator.pop(context);
-      } else {
-        print('Failure');
-        Navigator.pop(context);
-      }
-    } catch(e){
-      print('Send Error: ' +e.toString());
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Something went wrong'),));
-      //Navigator.pop(context);
-    }
-  }
 }

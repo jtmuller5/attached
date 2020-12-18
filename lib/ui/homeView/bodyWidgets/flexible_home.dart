@@ -8,6 +8,7 @@ class FlexibleHome extends ViewModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel model) {
     return NestedScrollView(
+      controller: model.livingScrollController,
       headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
         SliverOverlapAbsorber(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),

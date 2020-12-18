@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:at_client_mobile/at_client_mobile.dart';
 import 'package:attached/models/love_note.dart';
@@ -20,6 +20,32 @@ class HomeViewModel extends BaseViewModel {
   bool showToggle = true;
   bool loadingMessages = false;
   bool modelInitialized = false;
+  bool showLogo = true;
+
+  ScrollController scrollController = ScrollController();
+
+  ScrollController get livingScrollController {
+    if(scrollController == null) {
+      print('resetting controller');
+      scrollController = ScrollController();
+      scrollController.addListener(() {
+        if(scrollController.offset<120){
+          updateLogo(false);
+        } else {
+          updateLogo(true);
+        }
+      });
+      return scrollController;
+    }
+    else {
+      return scrollController;
+    }
+  }
+
+  void removeScroll(){
+    scrollController = null;
+    notifyListeners();
+  }
 
   int index;
   LoveNote selectedNote;
@@ -47,6 +73,14 @@ class HomeViewModel extends BaseViewModel {
 
       print('user box open: '+ Hive.isBoxOpen(userService.userBoxId).toString());
       await userService.userBox.put(UserService.atSignKey, attachedService.myAtSign);*/
+
+    scrollController.addListener(() {
+      if(scrollController.offset<120){
+        updateLogo(false);
+      } else {
+        updateLogo(true);
+      }
+    });
 
     try {
       // Get an instance of AtClient for the current user
@@ -107,17 +141,59 @@ class HomeViewModel extends BaseViewModel {
       }
     });
 
-    log('finished');
     notifyListeners();
   }
 
   void addMessage(LoveNote note) {
     notes.add(note);
-    notifyListeners();
+    //notifyListeners();
+  }
+
+  Future<void> submitNewMessage(BuildContext context, LoveNote loveNote) async {
+    var rng = Random();
+    var noteID = rng.nextInt(999999); // Random note ID
+
+    try {
+      // Get an instance of AtClient for the current user
+      var atClient =
+      await AtClientImpl.getClient( attachedService
+          .myAtSign);
+
+      print('Yours: ' +  attachedService
+          .theirAtSign);
+
+      // Submit new note only visible to your att@ched person
+      var newKey = AtKey();
+      newKey.sharedWith =  attachedService
+          .theirAtSign;
+      newKey.key = 'note_${noteID}';
+
+      print('Key:' + newKey.toString());
+
+      var success = await atClient.put(newKey, loveNote.message);
+
+      if (success) {
+        print('Success');
+        addMessage(loveNote);
+        Navigator.pop(context);
+      } else {
+        print('Failure');
+        Navigator.pop(context);
+      }
+    } catch(e){
+      print('Send Error: ' +e.toString());
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Something went wrong'),));
+      //Navigator.pop(context);
+    }
   }
 
   void toggleToggle() {
     showToggle = !showToggle;
+    notifyListeners();
+  }
+
+  void updateLogo(bool newVal) async{
+    showLogo = newVal;
     notifyListeners();
   }
 

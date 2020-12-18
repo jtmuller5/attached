@@ -24,10 +24,11 @@ class FlexibleHomeBody extends ViewModelWidget<HomeViewModel> {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-
-            if(model.notes.isNotEmpty)Flexible(
+            if(model.notes.isNotEmpty) Flexible(
                 flex: 1,
-                child: AttachedLogo()),
+                child: Opacity(
+                    opacity: model.livingScrollController.offset/150,
+                    child: AttachedLogo())),
             Flexible(
                 flex: 3,
                 child: PageCenter()),
