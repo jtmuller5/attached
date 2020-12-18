@@ -1,3 +1,4 @@
+import 'package:attached/services/services.dart';
 import 'package:attached/ui/attachView/attach_view_model.dart';
 import 'package:attached/ui/homeView/home_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class AttachView extends StatelessWidget {
                 child: Text(
                   'Who are you \natt@ched to?',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 36),
+                  style: TextStyle(fontSize: 36,
+                  fontWeight: FontWeight.w700),
                 ),
               ),
               Flexible(
@@ -38,21 +40,18 @@ class AttachView extends StatelessWidget {
                     onChanged: (value){
                       model.updateAttachedString(value);
                     },
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.alternate_email,color: Colors.white,),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                        filled: true,
-                        fillColor: Colors.red.shade300,
-                        focusColor: Colors.red,
-                        hintText: 'Someone special....',
-                        hintStyle: TextStyle(color: Colors.white38)),
+                    decoration: themeService.appInput.copyWith(
+                      prefixIcon: Icon(Icons.alternate_email, color: Colors.white,),
+                      hintText: 'Someone special....',
+                    ),
                   ),
                 ),
               ),
               RaisedButton(
-                child: Text('Attach'),
+                child: Text('Attach', style: TextStyle(color: Colors.white),),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)
+                ),
                 onPressed: () {
                   model.updateAttached();
                   Navigator.pushNamedAndRemoveUntil(context, HomeView.id, (route) => route.isFirst);

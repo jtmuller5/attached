@@ -1,5 +1,4 @@
-import 'package:attached/main.dart';
-import 'package:attached/services/attached_service.dart';
+import 'package:attached/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -15,18 +14,14 @@ String attachedString;
 
   void updateAttached(){
     if(attachedString.contains('@')) {
-      getIt
-          .get<AttachedService>()
+      attachedService
           .theirAtSign = attachedString;
-      getIt
-          .get<AttachedService>()
+     attachedService
           .theirSign = attachedString.replaceAll('@', '');
     } else{
-      getIt
-          .get<AttachedService>()
+      attachedService
           .theirAtSign = '@'+attachedString;
-      getIt
-          .get<AttachedService>()
+      attachedService
           .theirSign = attachedString;
     }
     notifyListeners();

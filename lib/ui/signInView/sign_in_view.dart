@@ -1,9 +1,8 @@
-import 'package:attached/ui/attachView/attach_view.dart';
+import 'package:attached/services/services.dart';
 import 'package:attached/ui/signInView/sign_in_at_view.dart';
 import 'package:attached/ui/signInView/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInView extends StatelessWidget {
@@ -26,19 +25,30 @@ class SignInView extends StatelessWidget {
                     style: GoogleFonts.caveat(
                       textStyle: TextStyle(
                         fontSize: 36,
-                        color: Colors.red
+                        //color: Colors.red
                       )
                     ),
                   ),
                   Flexible(
                     child: RaisedButton(
-                        child: Text('I Have an @ Sign'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                        child: Text('I Have an @ Sign',style: TextStyle(color: Colors.white),),
                         onPressed: () {
                          Navigator.pushNamed(context, SignInAtView.id);
                         }),
                   ),
                   Flexible(
                     child: OutlineButton(
+                      borderSide: BorderSide(
+                          color: themeService.darkColor,
+                          width: 2
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+
+                      ),
                       child: Text('I Need an @ sign'),
                       onPressed: () {
                         model.launchToAtStore();

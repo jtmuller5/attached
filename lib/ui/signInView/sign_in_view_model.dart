@@ -1,6 +1,4 @@
-import 'package:attached/main.dart';
-import 'package:attached/services/at_protocol_service.dart';
-import 'package:attached/services/attached_service.dart';
+import 'package:attached/services/services.dart';
 import 'package:attached/ui/attachView/attach_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +13,13 @@ class SignInViewModel extends BaseViewModel {
   bool debug = true;
   bool verbose = true;
   bool showSpinner = false;
-  String atSign;
+  String get atSign{
+    return attachedService.myAtSign;
+  }
   String message;
   FilePickerResult keyFile;
 
-
   TextEditingController atSignController = TextEditingController();
-  AtProtocolServer atProtocolServer = AtProtocolServer();
 
   void toggleSpinner() {
     showSpinner = !showSpinner;
@@ -29,7 +27,7 @@ class SignInViewModel extends BaseViewModel {
   }
 
   void updateAtSign(String newAt) {
-    atSign = newAt;
+    attachedService.myAtSign = newAt;
     notifyListeners();
   }
 
@@ -48,31 +46,23 @@ class SignInViewModel extends BaseViewModel {
   /// to perform a CRAM auth instead.
   login(BuildContext context) async {
     FocusScope.of(context).unfocus();
+    print('Before login');
     if (atSign != null) {
-      await atProtocolServer.onboard().then((value) {
-        if(atSign.contains('@')) {
-          getIt
-              .get<AttachedService>()
-              .myAtSign = atSign;
-          getIt
-              .get<AttachedService>()
-              .mySign = atSign.replaceAll('@', '');
-        } else{
-          getIt
-              .get<AttachedService>()
-              .myAtSign = '@'+atSign;
-          getIt
-              .get<AttachedService>()
-              .mySign = atSign;
+      await atProtocolService.onboard().then((value) {
+        if (atSign.contains('@')) {
+          attachedService.myAtSign = atSign;
+          attachedService.mySign = atSign.replaceAll('@', '');
+        } else {
+          attachedService.myAtSign = '@' + atSign;
+          attachedService.mySign = atSign;
         }
-
+        print('My at sign: ' + attachedService.myAtSign);
         Navigator.pushReplacementNamed(context, AttachView.id);
       }).catchError((error) async {
         try {
-          await atProtocolServer.authenticate(
-            getIt
-                .get<AttachedService>()
-                .myAtSign,
+          print('My at sign: ' + attachedService.myAtSign);
+          await atProtocolService.authenticate(
+            attachedService.myAtSign,
             cramSecret: at_demo_data.cramKeyMap[atSign],
           );
           Navigator.pushNamed(context, AttachView.id);
