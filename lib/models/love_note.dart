@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class LoveNote {
-  String message;
-  Color mainColor;
+  String? key;
+  String? message;
+  Color? mainColor;
   String sender;
   String date;
-  List<String> images = [];
-  String location = '';
-  List<String> gifts = [];
+  String? attachmentType; // Image, Location, Link
+  dynamic attachmentContent;
 
   LoveNote({
+    this.key,
     this.message,
     this.mainColor,
-    this.sender,
-    this.date,
-    this.images,
-    this.location,
-    this.gifts,
+    required this.sender,
+    required this.date,
+    this.attachmentType,
+    this.attachmentContent
   });
 }

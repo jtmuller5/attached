@@ -1,5 +1,4 @@
 import 'package:attached/models/love_note.dart';
-import 'package:attached/services/services.dart';
 import 'package:flutter/material.dart';
 
 Widget CardBack(LoveNote note, String sender){
@@ -8,7 +7,7 @@ Widget CardBack(LoveNote note, String sender){
       width: MediaQuery.of(context).size.width / 3 * 2,
       child: Card(
         shape: BeveledRectangleBorder(
-            side: BorderSide(color: themeService.darkColor),
+            side: BorderSide(color: Theme.of(context).primaryColorDark),
             borderRadius: BorderRadius.all(Radius.circular(4))),
         child: Card(
           shape: BeveledRectangleBorder(

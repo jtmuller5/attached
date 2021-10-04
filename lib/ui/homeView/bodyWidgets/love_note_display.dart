@@ -13,37 +13,17 @@ class LoveNoteDisplay extends ViewModelWidget<HomeViewModel>{
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    if(!model.loadingMessages) {
-      return Center(
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Spacer(
-              flex: 2,
-            ),
-            Flexible(flex: 5, child: LoveNoteCard(pageCard, model)),
-            Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(pageCard.date ?? '12/15/2020',
-                      style: GoogleFonts.caveat(
-                        textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      )),
-                  Text('Swipe left and right for more',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300
-                    ),),
-                ],
-              ),
-            ),
-          ],
-        ),
+    if(!model.isBusy) {
+      return Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Spacer(flex: 1,),
+          Flexible(flex: 7, child: LoveNoteCard(pageCard,)),
+          Spacer(
+            flex: 4,
+          )
+        ],
       );
     } else {
       return CircularProgressIndicator();

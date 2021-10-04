@@ -1,4 +1,4 @@
-import 'package:attached/services/services.dart';
+import 'package:attached/app/themes.dart';
 import 'package:attached/ui/signInView/sign_in_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class AlreadySignedIn extends ViewModelWidget<SignInViewModel>{
                 onChanged: (newAt) {
                   model.updateAtSign(newAt);
                 },
-                decoration: themeService.appInput.copyWith(
+                decoration: attachedInput.copyWith(
                   hintText: 'Your @ sign...',
                   prefixIcon: Icon(Icons.alternate_email, color: Colors.white,),
                 ),
@@ -47,56 +47,8 @@ class AlreadySignedIn extends ViewModelWidget<SignInViewModel>{
               ),
               onPressed: () {
                 model.toggleSpinner();
-                model.login(context);
+                //model.login(context);
               })
-        ],
-      ),
-    );
-  }
-}
-
-class ExistingKeys extends ViewModelWidget<SignInViewModel>{
-  final SignInViewModel model;
-
-  ExistingKeys(this.model);
-
-  @override
-  Widget build(BuildContext context, viewModel) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Use Existing Keys',
-            style: themeService.attachedStyle,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: systemService.screenWidth(context)*(2/3),
-              child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text('Please select the zip file containing your keys and QR code',
-                    overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black),)),
-            ),
-          ),
-          OutlineButton(
-              child: SizedBox(
-                width: 150,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(Icons.file_upload),
-                    Text('Coming Soon'),
-                    //Text('Locate Keys'),
-                  ],
-                ),
-              ),
-              onPressed: true?null:() async {
-                model.keyFile = await FilePicker.platform.pickFiles();
-              }),
         ],
       ),
     );

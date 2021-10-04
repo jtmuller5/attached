@@ -1,1 +1,13 @@
 include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  errors:
+    file_names: error
+    omit_local_variable_types: ignore
+
+  exclude:
+    - lib/services/getIt.dart
+
+linter:
+  rules:
+    file_names: true

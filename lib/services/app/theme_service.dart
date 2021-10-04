@@ -1,65 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked_themes/stacked_themes.dart';
 
 @injectable
 class ThemeService {
-  Color get darkColor {
-    return Colors.red.shade800; // c62828
+  void setLightMode(BuildContext context) {
+    getThemeManager(context).setThemeMode(ThemeMode.light);
   }
 
-  ThemeData get appTheme {
-    return ThemeData(
-      primarySwatch: Colors.red,
-      textTheme: TextTheme(
-          body1: TextStyle(color: darkColor),
-          button: TextStyle(color: Colors.white)
-      ),
-      buttonTheme: ButtonThemeData(
-        //colorScheme: ColorScheme.dark(),
-        buttonColor: darkColor,
-      ),
-    );
+  void setDarkMode(BuildContext context) {
+    getThemeManager(context).setThemeMode(ThemeMode.dark);
   }
 
-  TextStyle get attachedStyle{
-    return GoogleFonts.caveat(
-        textStyle: TextStyle(
-          fontSize: 36,
-          //color: Colors.red
-        ));
+  void toggleLightDarkMode(BuildContext context) {
+    getThemeManager(context).toggleDarkLightTheme();
   }
 
-  InputDecoration get appInput {
-    return InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-        ),
-        filled: true,
-        fillColor: Colors.grey.shade300,
-        focusColor: Colors.red,
-        hintStyle: TextStyle(color: Colors.red.shade300));
+  Color darkColor(BuildContext context){
+    return Theme.of(context).primaryColorDark;
   }
 
-  Color getColorFromNumber(int number) {
-    switch (number) {
-      case 0:
-        return Colors.blue;
-        break;
-      case 1:
-        return Colors.green;
-        break;
-      case 2:
-        return Colors.red;
-        break;
-      case 3:
-        return Colors.yellow;
-        break;
-      case 4:
-        return Colors.purple;
-        break;
-      default:
-        return Colors.red;
-    }
+  Color lightColor(BuildContext context){
+    return Theme.of(context).accentColor;
   }
 }

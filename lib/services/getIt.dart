@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:attached/services/getIt.config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -11,11 +13,13 @@ final getIt = GetIt.instance;
   preferRelativeImports: true, // default
   asExtension: false, // default
   generateForDir: [
-    'lib/services/at',
     'lib/services/app',
-    'lib/services/user',
+    'lib/services/at',
+    'lib/services/media',
     'lib/services/settings',
     'lib/services/theme',
+    'lib/services/user',
+    'lib/services/master',
   ],
 )
 void configureDependencies() => $initGetIt(getIt);

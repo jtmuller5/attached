@@ -1,21 +1,21 @@
-import 'package:attached/ui/profileView/profileWidgets/flexible_profile_body.dart';
-import 'package:attached/ui/profileView/profileWidgets/flexible_profile_header.dart';
 import 'package:attached/ui/profileView/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+import 'body/profile_body.dart';
+import 'header/profile_header.dart';
 
 class FlexibleProfile extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel viewModel) {
     return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) =>
-      <Widget>[
+      headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
         SliverOverlapAbsorber(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-          sliver: FlexibleProfileHeader(),
+          sliver: ProfileHeader()
         )
       ],
-      body: FlexibleProfileBody(),
+      body: ProfileBody(),
     );
   }
 }

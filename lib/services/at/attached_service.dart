@@ -1,17 +1,20 @@
-import 'dart:developer';
-
-import 'package:at_client_mobile/at_client_mobile.dart';
-import 'package:attached/models/love_note.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:at_commons/at_commons.dart';
+import 'package:stacked/stacked.dart';
+
+/// Manages the current user's at sign and that of the user they
+/// are attached to
 
 @singleton
-class AttachedService extends ChangeNotifier {
-  String myAtSign;
-  String theirAtSign;
+class AttachedService with ReactiveServiceMixin  {
 
-  String mySign;
-  String theirSign; // No @ symbol
+  String? myAtSign;
+  String? theirAtSign;
 
+  void setMyAtSign(String newVal){
+    myAtSign = newVal;
+  }
+
+  void setTheirAtSign(String newVal){
+    theirAtSign = newVal;
+  }
 }

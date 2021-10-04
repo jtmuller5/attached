@@ -8,7 +8,13 @@ class ShadowIcon extends StatelessWidget {
   final Color shadowColor;
   final double iconSize;
 
-  const ShadowIcon({Key key, this.icon, this.shadowColor = Colors.black, this.iconColor = Colors.white, this.iconSize = 24}) : super(key: key);
+  const ShadowIcon({
+    Key? key,
+    required this.icon,
+    this.shadowColor = Colors.black,
+    this.iconColor = Colors.white,
+    this.iconSize = 24,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
+import 'package:attached/app/app_router.dart';
 import 'package:attached/ui/reusables/shadow_icon.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 Widget InfoIcon(BuildContext context) {
@@ -14,7 +16,7 @@ Widget InfoIcon(BuildContext context) {
     onTap: (){
       showDialog(
           context: context,
-          child: AlertDialog(
+          builder:(context) => AlertDialog(
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -26,7 +28,7 @@ Widget InfoIcon(BuildContext context) {
             actions: [
               TextButton(
                 child: Text('Sweet'),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => appRouter.pop(),
               ),
             ],
           ));

@@ -1,9 +1,13 @@
+import 'package:at_onboarding_flutter/services/onboarding_service.dart';
+import 'package:attached/app/app_router.dart';
+import 'package:attached/app/app_router.gr.dart';
+import 'package:attached/services/at/at_protocol_service.dart';
 import 'package:attached/services/services.dart';
-import 'package:attached/ui/attachView/attach_view.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:collection/src/iterable_extensions.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:at_demo_data/at_demo_data.dart' as at_demo_data;
 import 'package:url_launcher/url_launcher.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -13,13 +17,45 @@ class SignInViewModel extends BaseViewModel {
   bool debug = true;
   bool verbose = true;
   bool showSpinner = false;
-  String get atSign{
+
+  String? get atSign {
     return attachedService.myAtSign;
   }
-  String message;
-  FilePickerResult keyFile;
+
+  String? message;
+  FilePickerResult? keyFile;
 
   TextEditingController atSignController = TextEditingController();
+
+  /// Route user based on onboarding process
+  Future<void> initialize() async {
+    setBusy(true);
+    //await atProtocolService.setup();
+    Map<String, bool?> atSignStatuses = await atProtocolService.keyChainManager.getAtsignsWithStatus();
+
+    print('Statuses: ' + atSignStatuses.toString());
+    await atProtocolService.getAtClientPreference();
+
+    List<String>? atSigns = await atProtocolService.keyChainManager.getAtSignListFromKeychain();
+    print('AtSign list: ' + atSigns.toString());
+
+    if (atSigns != null && (atSigns).isNotEmpty) {
+      OnboardingService.getInstance().setAtClientPreference = atProtocolService.atClientPreference!;
+      OnboardingService.getInstance().setAtsign = atSigns.first;
+      bool success = await OnboardingService.getInstance().onboard();
+
+      if (success) {
+        print('Logged in');
+        await appRouter.replace(HomeViewRoute());
+        /*WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+          print('Pushing');
+          await appRouter.push(HomeViewRoute());
+        });*/
+      }
+
+      setBusy(false);
+    }
+  }
 
   void toggleSpinner() {
     showSpinner = !showSpinner;
@@ -38,53 +74,5 @@ class SignInViewModel extends BaseViewModel {
     } else {
       throw 'Could not launch $url';
     }
-  }
-
-  // TODO: Write _login method
-  /// Use onboard() if device has PKAM public/private keys
-  /// in keychain. If that is unsuccessful, use authenticate()
-  /// to perform a CRAM auth instead.
-  login(BuildContext context) async {
-    FocusScope.of(context).unfocus();
-    print('Before login');
-    if (atSign != null) {
-      await atProtocolService.onboard().then((value) {
-        if (atSign.contains('@')) {
-          attachedService.myAtSign = atSign;
-          attachedService.mySign = atSign.replaceAll('@', '');
-        } else {
-          attachedService.myAtSign = '@' + atSign;
-          attachedService.mySign = atSign;
-        }
-        print('My at sign: ' + attachedService.myAtSign);
-        Navigator.pushReplacementNamed(context, AttachView.id);
-      }).catchError((error) async {
-        try {
-          print('My at sign: ' + attachedService.myAtSign);
-          await atProtocolService.authenticate(
-            attachedService.myAtSign,
-            cramSecret: at_demo_data.cramKeyMap[atSign],
-          );
-          Navigator.pushNamed(context, AttachView.id);
-        } catch (e) {
-          print('Error: ' + e.toString());
-          toggleSpinner();
-          message = 'There was an issue authenticating this @ sign';
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(message, textAlign: TextAlign.center),
-          ));
-        }
-      });
-    } else {
-      toggleSpinner();
-      message = 'Enter an @ sign to sign in';
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-        ),
-      ));
-    }
-    notifyListeners();
   }
 }

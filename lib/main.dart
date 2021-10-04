@@ -1,82 +1,80 @@
+import 'package:at_onboarding_flutter/services/onboarding_service.dart';
+import 'package:attached/app/themes.dart';
 import 'package:attached/services/getIt.dart';
 import 'package:attached/services/services.dart';
-import 'package:attached/services/user/user_service.dart';
-import 'package:attached/ui/homeView/home_view.dart';
-import 'package:attached/ui/newNoteView/new_note_view.dart';
-import 'package:attached/ui/profileView/profile_view.dart';
-import 'package:attached/ui/signInView/sign_in_at_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mullr_components/features/navigating/basic_navigator_observer.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_themes/stacked_themes.dart';
+import 'package:collection/collection.dart';
 
-import 'ui/attachView/attach_view.dart';
-import 'ui/signInView/sign_in_view.dart';
-
+import 'app/app_router.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   configureDependencies(); // Creates all necessary services for get_it
   await Hive.initFlutter();
   await initializeServices();
+  await ThemeManager.initialise();
 
-  runApp(MyApp(initialRoute: SignInView.id));
+  runApp(AppView());
 }
 
-class App extends StatelessWidget{
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    print('has key: ' + userService.userBox.containsKey(UserService.atSignKey).toString());
-    if(userService.userBox.containsKey(UserService.atSignKey)){
-      //atProtocolService.onboard();
-          return FutureBuilder(
-            future:  atProtocolService.authenticate(userService.atSign),
-              builder:(context, snapshot) {
-                if(snapshot.hasData){
-                  if(snapshot.connectionState == ConnectionState.done){
-                    print('done - ${snapshot.data}');
-                    if(snapshot.data){
-                      return MyApp(initialRoute: HomeView.id);
-                    } else{
-                      return MyApp(initialRoute: SignInView.id);
-                    }
-                  } else{
-                    return Center(child: CircularProgressIndicator(),);
-                  }
-                } else{
-                  return MyApp(initialRoute: SignInView.id);
-                }
-              },
-          );
+    return ViewModelBuilder<AppViewModel>.reactive(
+      viewModelBuilder: () => AppViewModel(),
+      onModelReady: (model) async {
+        //await model.initialize();
+      },
+      builder: (context, model, child) {
 
-    } else{
-      return MyApp(initialRoute: SignInView.id);
-    }
-  }
-
-}
-
-class MyApp extends StatelessWidget {
-  final String initialRoute;
-
-  const MyApp({Key key, this.initialRoute}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: themeService.appTheme,
-      initialRoute: initialRoute,
-      routes: {
-        SignInView.id: (context) => SignInView(),
-        SignInAtView.id: (context) => SignInAtView(),
-        AttachView.id: (context) => AttachView(),
-        HomeView.id: (context) => HomeView(),
-        NewNoteView.id: (context) => NewNoteView(),
-        ProfileView.id: (context) => ProfileView(),
+        return model.isBusy ? Center(
+          child: CircularProgressIndicator(),
+        ): ThemeBuilder(
+          defaultThemeMode: ThemeMode.light,
+          lightTheme: friendTheme,
+          darkTheme: darkTheme,
+          builder: (context, regularTheme, darkTheme, themeMode) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            builder: (context, nativeNavigator) {
+              return GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: Portal(
+                    child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  themeMode: ThemeMode.system,
+                  theme: lightTheme,
+                  routerDelegate: appRouter.delegate(
+                    navigatorObservers: () {
+                      return [
+                        if (kDebugMode) BasicNavigatorObserver(),
+                      ];
+                    },
+                  ),
+                  routeInformationParser: appRouter.defaultRouteParser(),
+                )),
+              );
+            },
+          ),
+        );
       },
     );
+  }
+}
+
+class AppViewModel extends BaseViewModel {
+  Future<void> initialize() async {
+
   }
 }

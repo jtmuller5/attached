@@ -9,7 +9,7 @@ Widget Background(LoveNote note) {
     height: double.infinity,
     decoration: BoxDecoration(
         gradient: LinearGradient(
-            colors: [note.mainColor, Colors.white],
+            colors: [(note.mainColor ?? Colors.red), Colors.white],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: [-.9, .8])),

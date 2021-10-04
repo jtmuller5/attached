@@ -9,7 +9,7 @@ class ProfileTopMenu extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel viewModel) {
     return Card(
-      color: themeService.darkColor,
+      color: Theme.of(context).primaryColorDark,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
